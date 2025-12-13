@@ -302,9 +302,9 @@ stampa ptr = indirizzo di memoria di a;
 > - standard output 
 > - standard error 
 
-> stdin -> recupera dati da tastiera 
-> stdout ->
-> stderr ->
+> stdin -> stream di Input
+> stdout -> stream di output
+> stderr -> stream di errore
 
 > fgetc -> recupera un carattere da uno stream specifico 
 
