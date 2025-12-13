@@ -34,6 +34,7 @@ La memoria si suddivide in due categorie:
 
 - Volatile
 - Non Volatile
+
 La memoria volatile è un tipo di memoria che "perde" i dati quando il calcolatore viene spento, ed anch'essa si suddivide in due componenti:
 - RAM (Random access memory), che immagazzina i programmi in esecuzione.
 - CACHE, che immagazzina i dati più utilizzati per tenerli pronti al momento di riutilizzarli.
@@ -77,22 +78,6 @@ la pipeline è la catena di distribuzione:
    MEMORY (accesso alla memoria)
    WRITEBACK (salva nei registri)
 > 
-
-errori con cui si ci può scontrare nella pipeline:
-
-- **Data Hazard**
-
-```jsx
-x = a+b
-y = x+c
-y dipende da x, quindi si può avere un contrasto di dato
-```
-
-- **Control Hazard**
-tramite comandi come il GOTO, alteriamo il flusso del programma, portando alla riesecuzione della pipeline, ma si può anche generare un data hazard
-- **Structural Hazard**
-i processi si "battono" per avere le risorse della cpu
-
 ## Hazard
 
 Quando più istruzioni vengono eseguite in parallelo, possono verificarsi **hazard**, cioè conflitti che impediscono l’esecuzione simultanea corretta.
@@ -104,8 +89,6 @@ Quando più istruzioni vengono eseguite in parallelo, possono verificarsi **haza
 - **Control Hazard** → causati dai salti condizionali, dove il processore non sa ancora quale direzione prendere.
 
 > I processori moderni riducono gli hazard tramite riordino dinamico e predizione dei salti.
-> 
-
 ---
 
 ## Esecuzione Fuori Ordine (Out-of-Order Execution)
