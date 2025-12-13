@@ -206,19 +206,19 @@ Sono perfette per:
 
 L'evoluzione verso architetture ibride rappresenta la risposta moderna e più avanzata alle crescenti esigenze di efficienza energetica e di prestazioni altamente specializzate nei sistemi di calcolo contemporanei. L'integrazione strategica di più processori diversificati e componenti di elaborazione su un singolo chip consente di ottimizzare in modo significativo il consumo energetico complessivo del sistema e di migliorare notevolmente le prestazioni complessive per tipologie di lavori specifici e carichi computazionali mirati.
 
-![Schermata_20251013_102934.png](attachment:2671636c-6fa7-48b0-a02b-fd6e57642c82:Schermata_20251013_102934.png)
-
 > L'offload computazionale permette alla CPU di delegare compiti specifici agli acceleratori più efficienti, dato che gli acceleratori dedicati sono 10-100 volte più efficienti.
 
 # MEMORIA
 
-La **memoria** di un calcolatore può essere vista come un **contenitore ordinato di celle**, ognuna delle quali può contenere un dato.
+La **memoria** di un calcolatore può essere vista come un **contenitore ordinato di celle, ognuna delle quali può contenere un dato.
 
 Ogni **cella di memoria** ha una **dimensione di 1 byte** (8 bit) e possiede un **indirizzo univoco** che serve per localizzarla e accedere al valore che contiene.
 
 Gli **indirizzi** partono sempre da **zero**, quindi l’indirizzo dell’ultima cella corrisponde al **numero totale di celle meno uno**.
 
 Ad esempio, una memoria composta da 1024 celle avrà indirizzi che vanno da 0 a 1023.
+
+l'insieme di tutte le celle della memoria viene chiamato **spazio di indirizzamento della memoria**
 
 ---
 
@@ -238,110 +238,60 @@ In un sistema operativo moderno, la memoria può essere **riassegnata** a più p
 Un esempio pratico è il **file system FAT32**, che non può gestire file superiori a 4 GB, ma può accettare più trasferimenti da dimensioni inferiori (ad esempio, due file da 3 GB ciascuno).
 
 ---
+> Il **contenuto della memoria principale** rimane memorizzato solo **finché il computer è alimentato**.
+   Quando l’alimentazione viene interrotta, i dati vengono persi: per questo motivo la memoria RAM è detta **volatile**.
 
-Il **contenuto della memoria principale** rimane memorizzato solo **finché il computer è alimentato**.
+---
+Esistono due principali tipi di memoria RAM:
+- **DRAM (Dynamic RAM)**: più lenta ma economica, utilizzata come memoria principale del sistema. 
+  I moduli DRAM sono installati negli **slot DIMM** della scheda madre.
+- **SRAM (Static RAM)**: più veloce ma anche molto più costosa. 
+  Per questo motivo è usata solo per memorie temporanee ad alte prestazioni, come la **memoria cache** del processore.    
+![[Memory-Organization-in-Computer-Organization-and-Architecture-4-638.webp]]
+## Cache e Gerarchie di Memoria
 
-Quando l’alimentazione viene interrotta, i dati vengono persi: per questo motivo la memoria RAM è detta **volatile**.
+  La memoria principale (RAM) è molto più lenta rispetto al processore.    
+  Per ridurre questa latenza, si usano le **cache**, memorie piccole ma velocissime.
+### Livelli di cache
+   
+- **L1:** la più veloce, ma piccola e dedicata a ciascun core.
+- **L2:** intermedia per velocità e capacità.
+- **L3:** condivisa tra i core, più grande ma più lenta.
+   
+ Quando un dato non è presente nella cache (**cache miss**), deve essere recuperato dalla RAM, rallentando l’esecuzione.    
+### Politiche di sostituzione
+- **LRU (Least Recently Used):** rimuove il dato usato meno recentemente.
+- **FIFO (First In, First Out):** elimina il dato più vecchio.
+- **Random:** scelta casuale, utile quando si vuole semplicità di implementazione.
+## Memoria Virtuale
+
+La **memoria virtuale** consente a ogni programma di vedere uno **spazio di memoria continuo e più ampio** rispetto a quello fisico disponibile utilizzando il disco fisso.    
+Il sistema operativo traduce gli **indirizzi virtuali** in **indirizzi fisici reali** tramite la **MMU (Memory Management Unit)**.    
+> la memoria virtuale è più lenta rispetto alla RAM
+### Tecniche di mappatura    
+- **Paginazione:** la memoria è divisa in blocchi di dimensione fissa (pagine).
+- **Segmentazione:** la memoria è suddivisa in segmenti logici di dimensione variabile.
+- **Ibridi:** combinano entrambi i metodi.    
+> Grazie alla memoria virtuale, parte del disco può essere usata come memoria di supporto (swap).
 
 ---
 
-All’interno della memoria di sistema è presente una sezione fondamentale: il **BIOS (Basic Input/Output System)**.
+>All’interno della memoria di sistema è presente una sezione fondamentale: il **BIOS (Basic Input/Output System)**.
 
 Il BIOS contiene due fasi principali:
-
 1. **Bootstrap** – avvia il sistema e immette sul bus le prime istruzioni necessarie per inizializzare i dispositivi di base;
 2. **POST (Power-On Self Test)** – esegue i controlli di base e carica il sistema operativo.
-
 Le aree di memoria che contengono il BIOS e altri **firmware** sono realizzate in tecnologia **ROM (Read Only Memory)**, che è **non volatile**: mantiene i dati anche senza alimentazione.
+Queste sezioni possono essere riprogrammate solamente tramite il programma di setup del bios o cambiando direttamente il bios.
 
----
+> Il bios però è stato superato dalla tecnologia UEFI, che fornisce le stesse principali funzioni del bios migliorandole come:
+> - Supporto dischi GPT (Bios supportava Solo dischi MBR) 
+> 	GPT -> permette di avere molte partizioni, il limite lo dichiara il sistema operativo (windows limita a 128 partizioni), tra l'altro i dati di avvio e di gestione delle partizioni sono immagazzinate in più posizioni
+> 	MBR -> è un sistema vecchio che permette di avere solo 4 partizioni primarie, dato che ogni partizione occupa 16 byte e la partizione di gestione è grande 64 byte, altro lato negativo è che i dati di avvio e di gestione sono immagazzinati in una sola partizione portando il disco ad un rischio di corruzione maggiore ai dischi GPT
+> - Interfaccia grafica migliorata, con integrazione di cursore del mouse
+> - introduzione di funzionalità come Secure Boot, che accetta solo programmi firmati
 
-Esistono due principali tipi di memoria RAM:
-
-- **DRAM (Dynamic RAM)**: più lenta ma economica, utilizzata come memoria principale del sistema.
-    
-    I moduli DRAM sono installati negli **slot DIMM** della scheda madre.
-    
-- **SRAM (Static RAM)**: più veloce ma anche molto più costosa.
-    
-    Per questo motivo è usata solo per memorie temporanee ad alte prestazioni, come la **memoria cache** del processore.
-    
-    ## Cache e Gerarchie di Memoria
-    
-    La memoria principale (RAM) è molto più lenta rispetto al processore.
-    
-    Per ridurre questa latenza, si usano le **cache**, memorie piccole ma velocissime.
-    
-    ### Livelli di cache
-    
-    - **L1:** la più veloce, ma piccola e dedicata a ciascun core.
-    - **L2:** intermedia per velocità e capacità.
-    - **L3:** condivisa tra i core, più grande ma più lenta.
-    
-    Quando un dato non è presente nella cache (**cache miss**), deve essere recuperato dalla RAM, rallentando l’esecuzione.
-    
-    ### Politiche di sostituzione
-    
-    - **LRU (Least Recently Used):** rimuove il dato usato meno recentemente.
-    - **FIFO (First In, First Out):** elimina il dato più vecchio.
-    - **Random:** scelta casuale, utile quando si vuole semplicità di implementazione.
-    
-    ---
-    
-    ## Memoria Virtuale
-    
-    La **memoria virtuale** consente a ogni programma di vedere uno **spazio di memoria continuo e più ampio** rispetto a quello fisico disponibile utilizzando il disco fisso.
-    
-    Il sistema operativo traduce gli **indirizzi virtuali** in **indirizzi fisici reali** tramite la **MMU (Memory Management Unit)**.
-    
-    > la memoria virtuale è più lenta rispetto alla RAM
-    
-    ### Tecniche di mappatura
-    
-    - **Paginazione:** la memoria è divisa in blocchi di dimensione fissa (pagine).
-    - **Segmentazione:** la memoria è suddivisa in segmenti logici di dimensione variabile.
-    - **Ibridi:** combinano entrambi i metodi.
-    
-    > Grazie alla memoria virtuale, parte del disco può essere usata come memoria di supporto (swap).
-    
-    ## Cache e Gerarchie di Memoria
-    
-    La memoria principale (RAM) è molto più lenta rispetto al processore.
-    
-    Per ridurre questa latenza, si usano le **cache**, memorie piccole ma velocissime.
-    
-    ### Livelli di cache
-    
-    - **L1:** la più veloce, ma piccola e dedicata a ciascun core.
-    - **L2:** intermedia per velocità e capacità.
-    - **L3:** condivisa tra i core, più grande ma più lenta.
-    
-    Quando un dato non è presente nella cache (**cache miss**), deve essere recuperato dalla RAM, rallentando l’esecuzione.
-    
-    ### Politiche di sostituzione
-    
-    - **LRU (Least Recently Used):** rimuove il dato usato meno recentemente.
-    - **FIFO (First In, First Out):** elimina il dato più vecchio.
-    - **Random:** scelta casuale, utile quando si vuole semplicità di implementazione.
-    
-    ---
-    
-    ## Memoria Virtuale
-    
-    La **memoria virtuale** consente a ogni programma di vedere uno **spazio di memoria continuo e più ampio** rispetto a quello fisico disponibile utilizzando il disco fisso.
-    
-    Il sistema operativo traduce gli **indirizzi virtuali** in **indirizzi fisici reali** tramite la **MMU (Memory Management Unit)**.
-    
-    > la memoria virtuale è più lenta rispetto alla RAM
-    
-    ### Tecniche di mappatura
-    
-    - **Paginazione:** la memoria è divisa in blocchi di dimensione fissa (pagine).
-    - **Segmentazione:** la memoria è suddivisa in segmenti logici di dimensione variabile.
-    - **Ibridi:** combinano entrambi i metodi.
-    
-    > Grazie alla memoria virtuale, parte del disco può essere usata come memoria di supporto (swap).
-
+![[mbr-vs-gpt-guide-3.jpg]]
 
 # BUS
 
