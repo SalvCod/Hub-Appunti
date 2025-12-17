@@ -378,7 +378,7 @@ I processi infatti possono essere Sincroni e Asincroni:
 
 - Sincroni -> i processi vengono messi in coda con un ordine
 - Asincroni -> i processi non hanno un ordine ma possono arrivare in qualsiasi momento (tipo lo spostamento del mouse).
-![[interrupt-driven-i-o-cycle-l.jpg]]
+
 ---
 Non sempre conviene che il processore gestisca direttamente ogni trasferimento di I/O, perché ciò rallenterebbe l’esecuzione.
 
