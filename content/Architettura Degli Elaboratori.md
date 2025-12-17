@@ -26,7 +26,7 @@ Il processore è costituito da 4 parti fondamentali:
 - Il **Program Counter**, che è una locazione di memoria contenente l'indirizzo dell'istruzione da eseguire.
 - Il **Registro delle Istruzioni**, che è una locazione di memoria contenente l'istruzione da eseguire.
 - **L'unità logico-aritmetica**, che fa i calcoli.
-- **L'unità di controllo**, che fa eseguire l'istruzione tramite i cambiamenti di stato.
+- **L'unità di controllo**, decodifica l'operation code e genera segnali di controllo.
 
 ## La Memoria Centrale
 
@@ -77,7 +77,6 @@ la pipeline è la catena di distribuzione:
    EXECUTE (escuzione dell'operazione)
    MEMORY (accesso alla memoria)
    WRITEBACK (salva nei registri)
-> 
 ## Hazard
 
 Quando più istruzioni vengono eseguite in parallelo, possono verificarsi **hazard**, cioè conflitti che impediscono l’esecuzione simultanea corretta.
@@ -113,23 +112,15 @@ I processori moderni:
 - raggiungono **accuratezze superiori al 95%**.
 
 > Se la predizione è sbagliata, entra in gioco il rollback per ripristinare lo stato precedente.
-> 
-
 ---
-
 ### ROLLBACK
-
 Il **rollback** permette di **annullare le istruzioni speculative** e **ripristinare lo stato corretto** del processore.
 
 È analogo ai **punti di ripristino** di un sistema operativo: se qualcosa va storto, si torna indietro all’ultimo stato valido.
-
 ## IL MICROPROCESSORE
-
 il microprocressore è stato una rivoluzione, avendo un'intera cpu su un singolo chip di silicio, portando l'informatica in tutti i contesti, tra cui il personal computer.
 ulteriore agevolazione dall'integrazione in un singolo chip, si elimina il BUS e quindi riduciamo drasticamente il rallentamento provocato da esso, evitando il bottleneck.
-
 ## EVOLUZIONE ISA (ISTRUCTION SET ARCHITECTURE)
-
 - CISC (complex istruction set computer)
 istruzioni complesse che eseguono operazioni elaborate in un singolo comando.
 esempi sono: x86 intel e amd
@@ -137,32 +128,19 @@ esempi sono: x86 intel e amd
 set di istruzioni semplificate ma efficienti.
 esempi sono: ARM per i dispositivi mobile, MIPS per sistemi embedded
 - le architetture moderne utilizzano un sistema ibrido tra CISC e RISC
-
 ## ARCHITETTURE SUPERSCALARI
-
 Le architetture superscalari rappresentano un'importante evoluzione nel design dei processori moderni. Questi processori sono caratterizzati dalla capacità di eseguire simultaneamente molteplici istruzioni durante ogni singolo ciclo di clock, sfruttando il parallelismo a livello di istruzioni per migliorare significativamente le prestazioni complessive del sistema.
-
 ## SUPERPIPELINING
-
 Il superpipelining rappresenta una tecnica avanzata che consiste nell'aumentare significativamente il numero di stadi che compongono la pipeline del processore. Attraverso questa suddivisione più granulare, ogni singolo stadio della pipeline viene ridotto in termini di complessità e durata, permettendo così di raggiungere frequenze di clock molto più elevate rispetto alle architetture tradizionali.
-
 > Entrambe le tecnologie, sia i processori superscalari che il superpipelining, contribuiscono in modo sostanziale all'aumento del throughput complessivo del sistema, ovvero la quantità totale di istruzioni che possono essere elaborate nell'unità di tempo.
-> 
-
 ## Issue Width
-
 L’**issue width** rappresenta il **numero massimo di istruzioni** che un processore *superscalare* può inviare in esecuzione in un singolo ciclo di clock.
-
 Ad esempio, se un processore ha un’issue width di **4**, significa che può potenzialmente eseguire fino a **4 istruzioni nello stesso ciclo**.
 
 > Aumentare la issue width migliora il parallelismo, ma aumenta anche la complessità e il rischio di conflitti tra istruzioni.
-
 ## Era Multicore
-
 Quando i limiti fisici (calore, consumo) hanno bloccato l’aumento delle frequenze, si è passati dai **processori single-core** ai **multicore**.
-
 In questo modo più core lavorano in parallelo, aumentando le prestazioni tramite **parallelismo spaziale**.
-
 Il problema principale è la **coerenza della memoria condivisa**.
 
 Per risolverlo, vengono usati protocolli come:
@@ -184,7 +162,6 @@ Sono perfette per:
 - simulazioni scientifiche.
 
 > Le GPU privilegiano il throughput elevato (tante operazioni contemporanee) piuttosto che la bassa latenza.
-
 ## Architetture ibride ed Eterogenee
 
 L'evoluzione verso architetture ibride rappresenta la risposta moderna e più avanzata alle crescenti esigenze di efficienza energetica e di prestazioni altamente specializzate nei sistemi di calcolo contemporanei. L'integrazione strategica di più processori diversificati e componenti di elaborazione su un singolo chip consente di ottimizzare in modo significativo il consumo energetico complessivo del sistema e di migliorare notevolmente le prestazioni complessive per tipologie di lavori specifici e carichi computazionali mirati.
@@ -204,26 +181,19 @@ Ad esempio, una memoria composta da 1024 celle avrà indirizzi che vanno da 0 a 
 l'insieme di tutte le celle della memoria viene chiamato **spazio di indirizzamento della memoria**
 
 ---
-
 L’**ampiezza dello spazio di indirizzamento** dipende dal numero di linee del **bus indirizzi** del sistema.
-
 In generale, se il bus indirizzi ha _n_ linee, lo spazio di indirizzamento sarà pari a: $2^n$
-
 Questo valore indica **quante celle di memoria** è possibile indirizzare.
-
 Ad esempio:
-
 - con 16 linee di indirizzi → $(2^{16} = 65.536)$ locazioni (64 KB);
 - con 32 linee → $(2^{32} = 4.294.967.296)$ locazioni (4 GB).
-
 In un sistema operativo moderno, la memoria può essere **riassegnata** a più processi, grazie alle tecniche di **allocazione dinamica** e **memoria virtuale**.
 
 Un esempio pratico è il **file system FAT32**, che non può gestire file superiori a 4 GB, ma può accettare più trasferimenti da dimensioni inferiori (ad esempio, due file da 3 GB ciascuno).
 
 ---
 > Il **contenuto della memoria principale** rimane memorizzato solo **finché il computer è alimentato**.
-   Quando l’alimentazione viene interrotta, i dati vengono persi: per questo motivo la memoria RAM è detta **volatile**.
-
+   Quando l’alimentazione viene interrotta, i dati vengono persi: per questo motivo la memoria RAM è detta **volatile**
 ---
 Esistono due principali tipi di memoria RAM:
 - **DRAM (Dynamic RAM)**: più lenta ma economica, utilizzata come memoria principale del sistema. 
@@ -232,11 +202,9 @@ Esistono due principali tipi di memoria RAM:
   Per questo motivo è usata solo per memorie temporanee ad alte prestazioni, come la **memoria cache** del processore.    
 ![[Memory-Organization-in-Computer-Organization-and-Architecture-4-638.webp]]
 ## Cache e Gerarchie di Memoria
-
   La memoria principale (RAM) è molto più lenta rispetto al processore.    
   Per ridurre questa latenza, si usano le **cache**, memorie piccole ma velocissime.
 ### Livelli di cache
-   
 - **L1:** la più veloce, ma piccola e dedicata a ciascun core.
 - **L2:** intermedia per velocità e capacità.
 - **L3:** condivisa tra i core, più grande ma più lenta.
@@ -247,7 +215,6 @@ Esistono due principali tipi di memoria RAM:
 - **FIFO (First In, First Out):** elimina il dato più vecchio.
 - **Random:** scelta casuale, utile quando si vuole semplicità di implementazione.
 ## Memoria Virtuale
-
 La **memoria virtuale** consente a ogni programma di vedere uno **spazio di memoria continuo e più ampio** rispetto a quello fisico disponibile utilizzando il disco fisso.    
 Il sistema operativo traduce gli **indirizzi virtuali** in **indirizzi fisici reali** tramite la **MMU (Memory Management Unit)**.    
 > la memoria virtuale è più lenta rispetto alla RAM
@@ -258,6 +225,7 @@ Il sistema operativo traduce gli **indirizzi virtuali** in **indirizzi fisici re
 > Grazie alla memoria virtuale, parte del disco può essere usata come memoria di supporto (swap).
 
 ---
+### BIOS
 
 >All’interno della memoria di sistema è presente una sezione fondamentale: il **BIOS (Basic Input/Output System)**.
 
@@ -275,19 +243,13 @@ Queste sezioni possono essere riprogrammate solamente tramite il programma di se
 > - introduzione di funzionalità come Secure Boot, che accetta solo programmi firmati
 
 ![[mbr-vs-gpt-guide-3.jpg]]
-
 # BUS
-
 Il **bus** è un insieme di fili (chiamati _linee_) che collegano tra loro le varie parti del computer:
-
 - il **processore (CPU)**,
 - la **memoria**,
 - e i **dispositivi di input/output (I/O)**.
-
 In pratica, è come una **strada a più corsie** su cui viaggiano i dati.
-
 Ogni filo del bus trasporta un bit (0 o 1).
-
 Tutti i componenti principali del computer “si affacciano” su questa strada per leggere, scrivere o scambiare informazioni.
 
 Il **modello di von Neumann** prevede che:
@@ -311,13 +273,13 @@ Ci sono due tipi principali di trasferimenti:
 
 Per gestire queste operazioni, il bus è diviso in **tre sottoblocchi** principali:
 
-|Tipo di Bus|Nome|Funzione|
-|---|---|---|
-|Bus degli indirizzi|**Address Bus (ABus)**|Specifica _dove_ leggere o scrivere in memoria.|
-|Bus dei dati|**Data Bus (DBus)**|Trasporta _i dati veri e propri_.|
-|Bus di controllo|**Control Bus (CBus)**|Indica _cosa fare_ e _quando_ (es. leggere, scrivere, fine operazione).|
+| Tipo di Bus         | Nome                   | Funzione                                                                |
+| ------------------- | ---------------------- | ----------------------------------------------------------------------- |
+| Bus degli indirizzi | **Address Bus (ABus)** | Specifica _dove_ leggere o scrivere in memoria.                         |
+| Bus dei dati        | **Data Bus (DBus)**    | Trasporta _i dati veri e propri_.                                       |
+| Bus di controllo    | **Control Bus (CBus)** | Indica _cosa fare_ e _quando_ (es. leggere, scrivere, fine operazione). |
 
-Il **Control Bus** contiene linee che dicono:
+Il **Control Bus** contiene linee di controllo che dicono:
 
 - se l’operazione è **tra memoria e CPU** oppure **tra I/O e CPU**;
 - se è una **lettura (R/W = 1)** o **scrittura (R/W = 0)**;
@@ -374,10 +336,7 @@ Le scelte su quanti fili usare dipendono da:
 - **efficienza**,
 - **costi**,
 - e **requisiti del sistema**.
-
-
 # I/O
-
 La sezione **Input/Output (I/O)** di un computer serve per:
 
 - **acquisire** dati e programmi dall’esterno (input);
@@ -415,19 +374,24 @@ Quando arriva un interrupt, il processore sospende temporaneamente ciò che sta 
 
 Questo meccanismo è essenziale per i dispositivi che funzionano in modo **asincrono**, cioè che possono richiedere attenzione in qualsiasi momento (come il mouse o la tastiera).
 
----
+I processi infatti possono essere Sincroni e Asincroni:
 
+- Sincroni -> i processi vengono messi in coda con un ordine
+- Asincroni -> i processi non hanno un ordine ma possono arrivare in qualsiasi momento (tipo lo spostamento del mouse).
+![[interrupt-driven-i-o-cycle-l.jpg]]
+---
 Non sempre conviene che il processore gestisca direttamente ogni trasferimento di I/O, perché ciò rallenterebbe l’esecuzione.
 
 Per questo motivo esistono modalità speciali:
 
 - **DMA (Direct Memory Access)**: il trasferimento dei dati avviene direttamente tra la memoria e la periferica, senza coinvolgere la CPU.
-- **Bus Mastering**: una variante del DMA in cui la periferica può diventare “padrone del bus” per un certo tempo e gestire i trasferimenti autonomamente.
+  - **Burst Transfer**: il bus viene completamente riservato al DMA fino alla fine della task, negando l'accesso alla CPU.
+  - **Cycle Stealing**: il bus viene occupato per un solo ciclo alla volta per trasferire una parola (un bit o un insieme di bit), così che la CPU non verrà rallentata dal processo.
+  - **Transparent/Hidden**: Il DMA occupa il BUS solo quando la CPU non ne avrà bisogno.
 
 Queste tecniche permettono di spostare grandi quantità di dati senza occupare la CPU.
 
 ---
-
 Ogni periferica dispone di una circuiteria chiamata **scheda controller**, che ha il compito di:
 
 - collegarsi al bus di sistema;
@@ -475,28 +439,30 @@ Gli standard più vecchi come **RS232**, **porte parallele Centronics** e **PS/2
 Un **processore (CPU – Central Processing Unit)** è un **circuito integrato** in grado di eseguire operazioni logiche, aritmetiche e di controllo sui dati.
 
 È composto da varie **unità funzionali**, ciascuna con un ruolo specifico.
-
+- **UNITA' DI CONTROLLO**
+- **L'AREA DEI REGISTRI**
+- **L'UNITA' LOGICA-ARITMETICA**
 ---
 
 ### COMPONENTI PRINCIPALI
 
-- **Registri:** piccole memorie interne alla CPU, molto veloci, che contengono temporaneamente dati e indirizzi.
-    
-    Servono per trasferire i dati all’interno del processore, in particolare verso l’**ALU** (Arithmetic Logic Unit) per l’elaborazione.
-    
-- **ALU (Arithmetic Logic Unit):** esegue operazioni **aritmetiche** (addizione, sottrazione, moltiplicazione, divisione) e **logiche** (AND, OR, NOT, XOR).
-    
-    È l’unità di esecuzione effettiva del processore.
-    
+- **I Registri**: contengono i dati letti dall'UC per predisporli nella ALU e i dati relativi ai risultati delle operazioni.
+
+- **ALU**: è l'unità di esecuzione effettiva del processore, è composta da microprogrammi cablati direttamente in hardware.
+
 - **Unità di controllo (Control Unit):** gestisce il flusso delle istruzioni, decodifica gli **opcode**, coordina le operazioni tra registri, ALU e memoria.
+
 - **Program Counter (PC):** registro speciale che contiene l’indirizzo dell’**istruzione successiva** da eseguire. Dopo ogni istruzione, viene **incrementato automaticamente** della lunghezza dell’istruzione appena completata.
+
+OPCODE -> è un codice operativo che rappresenta un'istruzione dell'ISA, per esempio: `0001`=ADD.
 
 ---
 
 ### DATA PATH
 
 Il **data path** rappresenta il percorso che i dati compiono all’interno del processore:
-$\text{Registri} \rightarrow \text{Registri di input} \rightarrow \text{ALU} \rightarrow \text{Registro di output}\rightarrow registri$
+
+**Registri -> Registri di Input -> ALU -> Registri di Output -> Registri**
 
 Questo ciclo consente il trasferimento e l’elaborazione continua delle informazioni.
 
@@ -506,28 +472,27 @@ Questo ciclo consente il trasferimento e l’elaborazione continua delle informa
 
 Il processore opera secondo una **sequenza ciclica di fasi**, nota come **FETCH – DECODE – EXECUTE – STORE**:
 
-1. **FETCH (Prelievo):**
-    
-    L’unità di controllo pone sul **bus degli indirizzi (Address Bus)** il valore contenuto nel **Program Counter**, per leggere dalla memoria l’istruzione da eseguire.
-    
-    L’**opcode (Operation Code)** dell’istruzione viene caricato nel registro istruzioni (Instruction Register).
-    
+1. **FETCH (Prelievo):**    
+
+L’unità di controllo pone sul **bus degli indirizzi (Address Bus)** il valore contenuto nel **Program Counter**, per leggere dalla memoria l’istruzione da eseguire.
+
+L’**opcode (Operation Code)** dell’istruzione viene caricato nel registro istruzioni (Instruction Register).
+
 2. **DECODE (Decodifica):**
-    
-    L’unità di controllo **interpreta l’Op.code**, determinando **quali operandi servono** e **quale operazione** eseguire.
-    
-    In questa fase vengono caricati gli **operandi** dai registri o dalla memoria (**Operand Fetch**).
-    
+
+L’unità di controllo **interpreta l’Op.code**, determinando **quali operandi servono** e **quale operazione** eseguire.
+ 
+In questa fase vengono caricati gli **operandi** dai registri o dalla memoria (**Operand Fetch**).
+
 3. **EXECUTE (Esecuzione):**
-    
-    L’ALU o un’unità funzionale specializzata **esegue l’operazione richiesta** sull’input.
-    
-    La velocità di questa fase dipende dal **clock della CPU**, che regola la frequenza di esecuzione dei microprogrammi.
-    
+
+L’ALU o un’unità funzionale specializzata **esegue l’operazione richiesta** sull’input.
+
+La velocità di questa fase dipende dal **clock della CPU**, che regola la frequenza di esecuzione dei microprogrammi.
+
 4. **STORE (Memorizzazione):**
-    
-    I risultati dell’operazione vengono **memorizzati** nei registri o **scritti in memoria** (tramite il **bus dei dati**) oppure inviati ai dispositivi di I/O.
-    
+
+I risultati dell’operazione vengono **memorizzati** nei registri o **scritti in memoria** (tramite il **bus dei dati**) oppure inviati ai dispositivi di I/O.
 
 ---
 
